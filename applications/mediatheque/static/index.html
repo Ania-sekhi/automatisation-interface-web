@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Médiathèque</title>
+  <style>
+    :root { --fond: #f6f5f1; --texte: #1f2328; --accent: #2d6a4f; --erreur: #b42318; --ligne: #d9d6cc; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, sans-serif; background: var(--fond); color: var(--texte); }
+    header { background: var(--accent); color: white; padding: 16px 24px; }
+    header h1 { margin: 0; font-size: 1.5rem; }
+    main { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+    section { background: white; border: 1px solid var(--ligne); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    h2 { margin-top: 0; font-size: 1.1rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--ligne); vertical-align: middle; }
+    .statut { font-size: .85rem; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .disponible { background: #d8f3dc; }
+    .emprunté { background: #ffe5d9; }
+    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; align-items: end; }
+    label { display: flex; flex-direction: column; font-size: .9rem; gap: 4px; }
+    input { padding: 6px 8px; border: 1px solid var(--ligne); border-radius: 4px; font-size: 1rem; }
+    button { padding: 6px 12px; border: 1px solid var(--accent); background: white; color: var(--accent); border-radius: 4px; cursor: pointer; }
+    button.principal { background: var(--accent); color: white; }
+    button:disabled { opacity: .4; cursor: not-allowed; }
+    #message { min-height: 1.5em; margin: 0 0 12px; font-weight: 600; }
+    #message.erreur { color: var(--erreur); }
+    #message.succes { color: var(--accent); }
+    .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .actions input { width: 120px; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <header><h1>📚 Médiathèque</h1></header>
+  <main>
+    <p id="message" role="alert" data-testid="message"></p>
+
+    <section>
+      <h2>Ajouter un livre</h2>
+      <form id="form-ajout" data-testid="form-ajout">
+        <label>Titre <input id="titre" name="titre" data-testid="champ-titre"></label>
+        <label>Auteur <input id="auteur" name="auteur" data-testid="champ-auteur"></label>
+        <label>ISBN (13 chiffres) <input id="isbn" name="isbn" data-testid="champ-isbn"></label>
+        <button type="submit" class="principal" data-testid="bouton-ajouter">Ajouter</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Catalogue (<span data-testid="nombre-livres">0</span> livres)</h2>
+      <table>
+        <thead><tr><th>Titre</th><th>Auteur</th><th>ISBN</th><th>Statut</th><th>Actions</th></tr></thead>
+        <tbody id="catalogue" data-testid="catalogue"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const message = document.getElementById('message');
+
+    function afficher(texte, type) {
+      message.textContent = texte;
+      message.className = type;
+    }
+
+    async function appeler(methode, url, corps) {
+      const reponse = await fetch(url, {
+        method: methode,
+        headers: { 'Content-Type': 'application/json' },
+        body: corps ? JSON.stringify(corps) : undefined,
+      });
+      const donnees = reponse.status === 204 ? null : await reponse.json();
+      if (!reponse.ok) throw new Error(donnees.erreur);
+      return donnees;
+    }
+
+    function ligne(livre) {
+      const tr = document.createElement('tr');
+      tr.dataset.testid = 'livre-' + livre.isbn;
+      const cellules = [livre.titre, livre.auteur, livre.isbn];
+      cellules.forEach((texte) => { const td = document.createElement('td'); td.textContent = texte; tr.append(td); });
+
+      const statut = document.createElement('td');
+      const badge = document.createElement('span');
+      badge.className = 'statut ' + livre.statut;
+      badge.dataset.testid = 'statut';
+      badge.textContent = livre.statut + (livre.emprunteur ? ' par ' + livre.emprunteur : '');
+      statut.append(badge);
+      tr.append(statut);
+
+      const cellule = document.createElement('td');
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+      cellule.append(actions);
+      if (livre.statut === 'disponible') {
+        const nom = document.createElement('input');
+        nom.placeholder = 'Emprunteur';
+        nom.dataset.testid = 'champ-emprunteur';
+        const emprunter = document.createElement('button');
+        emprunter.textContent = 'Emprunter';
+        emprunter.dataset.testid = 'bouton-emprunter';
+        emprunter.onclick = () => action(() => appeler('POST', `/api/livres/${livre.id}/emprunt`, { emprunteur: nom.value }), `« ${livre.titre} » emprunté`);
+        actions.append(nom, emprunter);
+      } else {
+        const rendre = document.createElement('button');
+        rendre.textContent = 'Rendre';
+        rendre.dataset.testid = 'bouton-rendre';
+        rendre.onclick = () => action(() => appeler('POST', `/api/livres/${livre.id}/retour`), `« ${livre.titre} » rendu`);
+        actions.append(rendre);
+      }
+      const supprimer = document.createElement('button');
+      supprimer.textContent = 'Supprimer';
+      supprimer.dataset.testid = 'bouton-supprimer';
+      supprimer.disabled = livre.statut !== 'disponible';
+      supprimer.title = supprimer.disabled ? 'Un livre emprunté ne peut pas être supprimé' : '';
+      supprimer.onclick = () => action(() => appeler('DELETE', `/api/livres/${livre.id}`), `« ${livre.titre} » supprimé`);
+      actions.append(supprimer);
+      tr.append(cellule);
+      return tr;
+    }
+
+    async function charger() {
+      const livres = await appeler('GET', '/api/livres');
+      document.getElementById('catalogue').replaceChildren(...livres.map(ligne));
+      document.querySelector('[data-testid="nombre-livres"]').textContent = livres.length;
+    }
+
+    async function action(appel, succes) {
+      try {
+        await appel();
+        afficher(succes, 'succes');
+      } catch (e) {
+        afficher(e.message, 'erreur');
+      }
+      await charger();
+    }
+
+    document.getElementById('form-ajout').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const corps = { titre: titre.value, auteur: auteur.value, isbn: isbn.value };
+      action(async () => { await appeler('POST', '/api/livres', corps); e.target.reset(); }, `« ${corps.titre.trim()} » ajouté au catalogue`);
+    });
+
+    charger();
+  </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+{
+  "id": "bc68a632-cce2-401e-ad3f-d92b83c39ffb",
+  "version": "2.0",
+  "name": "TP Guru99 - solution corrigée",
+  "url": "https://demo.guru99.com",
+  "tests": [
+    {
+      "id": "10c5bd65-4fd7-4e32-9c47-dc8f7fc1e16e",
+      "name": "01 - Connexion réussie",
+      "commands": [
+        {
+          "id": "3ab510c0-136f-454e-9ff0-e693db153b3c",
+          "comment": "",
+          "command": "open",
+          "target": "https://demo.guru99.com/test/login.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "0a6e5e93-84fd-4e64-adb7-3d393054f31b",
+          "comment": "",
+          "command": "type",
+          "target": "id=email",
+          "targets": [],
+          "value": "test"
+        },
+        {
+          "id": "9f15d49a-34ef-4e33-8937-b61005136af0",
+          "comment": "",
+          "command": "type",
+          "target": "id=passwd",
+          "targets": [],
+          "value": "test"
+        },
+        {
+          "id": "21cd1204-70e5-409c-a0ec-5d3ebcb772d8",
+          "comment": "",
+          "command": "click",
+          "target": "id=SubmitLogin",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b09c37cb-fd39-46f1-9a30-7c0984f88e06",
+          "comment": "Ex. 1 : message de succès",
+          "command": "assertElementPresent",
+          "target": "xpath=//h3[contains(.,'Successfully Logged in')]",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "3bc3a9d1-cc91-4ac9-b83b-8e39139b405e",
+      "name": "02 - Boutons radio : Reset désélectionne tout",
+      "commands": [
+        {
+          "id": "8b8c993a-cda5-4330-a90c-6414f793c64b",
+          "comment": "",
+          "command": "open",
+          "target": "https://demo.guru99.com/test/ajax.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "0d90c6e7-6ca8-4811-a7c6-96dd09484370",
+          "comment": "",
+          "command": "click",
+          "target": "id=yes",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "b0624093-9186-4be8-839d-2d41d95a4f29",
+          "comment": "Précondition : le bouton est bien sélectionné",
+          "command": "assertChecked",
+          "target": "id=yes",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d874058c-939b-45cd-859c-68c6fccad7d3",
+          "comment": "Bouton Reset",
+          "command": "click",
+          "target": "css=p > input:nth-child(1)",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "969cdab1-3da2-4cbf-a3b2-653573e8c01d",
+          "comment": "",
+          "command": "assertNotChecked",
+          "target": "id=yes",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "63535469-a729-49df-b1c6-34137f8fbd39",
+          "comment": "",
+          "command": "assertNotChecked",
+          "target": "id=no",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "bd96be38-2db2-4076-979e-aed04d021574",
+      "name": "03 - Boutons radio : Check affiche la valeur",
+      "commands": [
+        {
+          "id": "ce1f97da-5669-4dc4-a079-17cc05fd10ba",
+          "comment": "Corrigé : la proposition ouvrait link.html",
+          "command": "open",
+          "target": "https://demo.guru99.com/test/ajax.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4086a86d-1394-41be-8044-c8e55c6f2cbf",
+          "comment": "",
+          "command": "click",
+          "target": "id=yes",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "2587872b-ec03-4569-894e-dba24c05e800",
+          "comment": "",
+          "command": "click",
+          "target": "id=buttoncheck",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "6e534f10-d23f-4b90-b6c4-ca612c5a7249",
+          "comment": "",
+          "command": "assertText",
+          "target": "css=.radiobutton",
+          "targets": [],
+          "value": "Radio button is checked and it's value is Yes"
+        }
+      ]
+    },
+    {
+      "id": "b0155469-f2d0-4737-a2e9-faab19280a7f",
+      "name": "04 - Liens de redirection (Google, Facebook)",
+      "commands": [
+        {
+          "id": "79e06775-7c23-4874-833d-5ce9f635747a",
+          "comment": "",
+          "command": "open",
+          "target": "https://demo.guru99.com/test/link.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3093f188-2bd0-443b-b517-8b6230f6cd8f",
+          "comment": "On vérifie la cible du lien sans dépendre du site externe",
+          "command": "assertElementPresent",
+          "target": "xpath=//a[contains(@href,'google')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4b3c4bef-ad90-4f24-835a-a141a8192fca",
+          "comment": "",
+          "command": "assertElementPresent",
+          "target": "xpath=//a[contains(@href,'facebook')]",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "d963bcd1-e487-4b91-a6c1-63b58bd3d783",
+      "name": "05 - Sélection d'une date",
+      "commands": [
+        {
+          "id": "7e1599ec-e875-4423-bcc8-4b212bdc9f3c",
+          "comment": "",
+          "command": "open",
+          "target": "/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "9417cd4d-c7fc-4c7c-ac92-07b9ef5bc757",
+          "comment": "",
+          "command": "click",
+          "target": "linkText=Selenium",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "288a81f9-86af-449b-a0dc-4c35e69192a0",
+          "comment": "",
+          "command": "click",
+          "target": "linkText=Selenium DatePicker Demo",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "4cce3c3e-fa39-4b04-a855-fa7c3bdd2ad6",
+          "comment": "",
+          "command": "type",
+          "target": "name=bdaytime",
+          "targets": [],
+          "value": "2025-04-16T12:12"
+        },
+        {
+          "id": "c9293da2-3837-4c92-bce7-b03e460dd141",
+          "comment": "",
+          "command": "click",
+          "target": "css=.row:nth-child(2)",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e4a545d7-4945-4e9a-a4c2-491af01eb5ee",
+          "comment": "",
+          "command": "click",
+          "target": "linkText=Selenium",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "050896b1-e47c-4b6f-9810-dd77cfbf1dd1",
+          "comment": "Bouton Submit",
+          "command": "click",
+          "target": "css=input:nth-child(4)",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "00357fe0-af36-46ec-898d-7078631f1b58",
+          "comment": "Corrigé : remplace css=div:nth-child(8), dépendant de la structure",
+          "command": "assertElementPresent",
+          "target": "xpath=//*[contains(text(),'Your Birth Date is')]",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "3abdd7d3-1d8f-44c0-a921-74a46912c814",
+      "name": "06 - Glisser-déposer",
+      "commands": [
+        {
+          "id": "2ef76c16-e055-4663-b61b-7ba1ba6b9620",
+          "comment": "",
+          "command": "open",
+          "target": "https://demo.guru99.com/test/drag_drop.html",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "16587908-102c-40d8-93ec-5306cd85fa40",
+          "comment": "",
+          "command": "dragAndDropToObject",
+          "target": "xpath=//*[@id=\"fourth\"]/a",
+          "targets": [],
+          "value": "xpath=//*[@id=\"shoppingCart4\"]/div"
+        },
+        {
+          "id": "a9acb4ec-a9d8-42f5-b4c9-c0994958e290",
+          "comment": "",
+          "command": "assertText",
+          "target": "xpath=//*[@id=\"amt7\"]/li",
+          "targets": [],
+          "value": "5000"
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "d15799ce-7892-4e02-bcb2-e54b83a69a41",
+      "name": "Suite complète",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "10c5bd65-4fd7-4e32-9c47-dc8f7fc1e16e",
+        "3bc3a9d1-cc91-4ac9-b83b-8e39139b405e",
+        "bd96be38-2db2-4076-979e-aed04d021574",
+        "b0155469-f2d0-4737-a2e9-faab19280a7f",
+        "d963bcd1-e487-4b91-a6c1-63b58bd3d783",
+        "3abdd7d3-1d8f-44c0-a921-74a46912c814"
+      ]
+    }
+  ],
+  "urls": [
+    "https://demo.guru99.com"
+  ],
+  "plugins": []
+}

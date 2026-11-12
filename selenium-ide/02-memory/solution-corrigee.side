@@ -1,0 +1,347 @@
+{
+  "id": "31a70e83-0279-4360-8018-d42f2e1393e9",
+  "version": "2.0",
+  "name": "TP Memory - solution corrigée",
+  "url": "https://enijdenis.github.io",
+  "tests": [
+    {
+      "id": "d6ecaa76-34c9-4c78-a786-06fe7e45e60d",
+      "name": "INS-01 - Création de profil OK",
+      "commands": [
+        {
+          "id": "59f3d704-d095-4c3a-9a3a-a45f16346c49",
+          "comment": "",
+          "command": "open",
+          "target": "/memory/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c58fb584-a7e7-4b02-bfc7-6340129d7d22",
+          "comment": "",
+          "command": "click",
+          "target": "linkText=S'inscrire",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "28f5a3f8-3665-481a-bd2d-9823709a22b7",
+          "comment": "",
+          "command": "type",
+          "target": "id=user",
+          "targets": [],
+          "value": "test"
+        },
+        {
+          "id": "e0fe3ce4-929b-4cb2-a459-c5bd40de7030",
+          "comment": "",
+          "command": "type",
+          "target": "id=email",
+          "targets": [],
+          "value": "test@test.com"
+        },
+        {
+          "id": "25f2f4da-8102-49e4-afb7-f4fcd75b2b77",
+          "comment": "",
+          "command": "type",
+          "target": "id=password",
+          "targets": [],
+          "value": "12Mdp@"
+        },
+        {
+          "id": "b9f014dd-4322-44d9-8d5d-4d9b4a9928e8",
+          "comment": "",
+          "command": "type",
+          "target": "id=psw-confirmation",
+          "targets": [],
+          "value": "12Mdp@"
+        },
+        {
+          "id": "efaab719-c013-4d97-a577-9676f6244f1c",
+          "comment": "Valider",
+          "command": "click",
+          "target": "css=button:nth-child(1)",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "f7135d6b-3ab6-4e16-a5de-3e01f47c6b95",
+          "comment": "La page de connexion s'affiche",
+          "command": "assertTitle",
+          "target": "ENI-MEMORY-Connecter",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "5c77454b-4153-4994-b8b2-270fcd24de7f",
+      "name": "INS-02 - Création KO : nom d'utilisateur de moins de 3 caractères",
+      "commands": [
+        {
+          "id": "95e27ebc-3f50-4ff5-a72f-37257f0a8090",
+          "comment": "",
+          "command": "open",
+          "target": "/memory/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "dde5abdd-42f1-4109-8914-83a2b2ac5592",
+          "comment": "",
+          "command": "click",
+          "target": "linkText=S'inscrire",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "06f8d930-6fb7-4899-baf7-e60659c7cdcf",
+          "comment": "",
+          "command": "type",
+          "target": "id=user",
+          "targets": [],
+          "value": "te"
+        },
+        {
+          "id": "5a7fd296-2273-4ca2-ab00-7c9fa2ba1d9e",
+          "comment": "",
+          "command": "type",
+          "target": "id=email",
+          "targets": [],
+          "value": "test@test.com"
+        },
+        {
+          "id": "c0c97756-0703-48d3-bfaa-10e5ca477075",
+          "comment": "",
+          "command": "type",
+          "target": "id=password",
+          "targets": [],
+          "value": "12Mdp@"
+        },
+        {
+          "id": "c17525f9-dd80-480f-8d49-fb2da35e3341",
+          "comment": "",
+          "command": "type",
+          "target": "id=psw-confirmation",
+          "targets": [],
+          "value": "12Mdp@"
+        },
+        {
+          "id": "ece90b17-4475-456c-8d76-f4cf087a18ee",
+          "comment": "",
+          "command": "assertElementPresent",
+          "target": "xpath=//*[contains(text(),'Choisissez un pseudo contenant au moins 3 caractères')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3b1e63bb-ce11-4702-b7f5-1456a2492af3",
+          "comment": "",
+          "command": "click",
+          "target": "css=button:nth-child(1)",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "242145b5-de9e-4d78-a36b-56093b72f05a",
+          "comment": "On reste sur la page d'inscription",
+          "command": "assertElementPresent",
+          "target": "id=psw-confirmation",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "9b6a42b5-a169-4daa-a418-887ec1ba4541",
+      "name": "INS-03 - Création KO : email mal formaté",
+      "commands": [
+        {
+          "id": "9b934196-cd22-4e16-8653-4e2ef3d8c9c8",
+          "comment": "",
+          "command": "open",
+          "target": "/memory/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "e79e8eb0-ee7a-4eb0-a456-04bcf43dccc6",
+          "comment": "",
+          "command": "click",
+          "target": "linkText=S'inscrire",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "7b7e406c-e105-44f3-b01a-2ade94a2d306",
+          "comment": "",
+          "command": "type",
+          "target": "id=user",
+          "targets": [],
+          "value": "test"
+        },
+        {
+          "id": "c2d168ff-7825-41ad-a862-e11fae481956",
+          "comment": "",
+          "command": "type",
+          "target": "id=email",
+          "targets": [],
+          "value": "test@test"
+        },
+        {
+          "id": "e36f46ad-ccc6-467d-8b5d-ce51544a41a4",
+          "comment": "",
+          "command": "type",
+          "target": "id=password",
+          "targets": [],
+          "value": "12Mdp@"
+        },
+        {
+          "id": "9dccd7c1-a499-43e3-a3fe-eb24aa405130",
+          "comment": "",
+          "command": "type",
+          "target": "id=psw-confirmation",
+          "targets": [],
+          "value": "12Mdp@"
+        },
+        {
+          "id": "8be261e0-50de-4a8b-81fd-f5e42d051d01",
+          "comment": "",
+          "command": "assertElementPresent",
+          "target": "xpath=//*[contains(text(),'Rentrez un email valide')]",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "75034c62-0c02-42d0-9d92-8181d7c06638",
+          "comment": "",
+          "command": "click",
+          "target": "css=button:nth-child(1)",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "ab28edce-5ecf-4408-9f3b-275cf3ae78f4",
+          "comment": "On reste sur la page d'inscription",
+          "command": "assertElementPresent",
+          "target": "id=psw-confirmation",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "59e2c384-f0aa-4e32-9ff3-9cbdcfef14ba",
+      "name": "INS-04 - Annuler vide le formulaire",
+      "commands": [
+        {
+          "id": "d9572bb8-7364-4619-b0f5-5c539f021809",
+          "comment": "",
+          "command": "open",
+          "target": "/memory/",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d0c968bb-92d3-4af8-acc5-3a022fe6f2ea",
+          "comment": "",
+          "command": "click",
+          "target": "linkText=S'inscrire",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "70b1acfe-39af-4382-9730-b8fe4f71913a",
+          "comment": "",
+          "command": "type",
+          "target": "id=user",
+          "targets": [],
+          "value": "test"
+        },
+        {
+          "id": "13723ec9-c015-4ac5-8ec4-a2b172818618",
+          "comment": "",
+          "command": "type",
+          "target": "id=email",
+          "targets": [],
+          "value": "test@test.com"
+        },
+        {
+          "id": "85756032-d4a0-456a-a36b-dad4df4a62f2",
+          "comment": "",
+          "command": "type",
+          "target": "id=password",
+          "targets": [],
+          "value": "12Mdp@"
+        },
+        {
+          "id": "dcc90fb4-d14e-444c-b985-b97c42cba528",
+          "comment": "",
+          "command": "type",
+          "target": "id=psw-confirmation",
+          "targets": [],
+          "value": "12Mdp@"
+        },
+        {
+          "id": "36aa9627-264e-4755-87fd-ae153a5887be",
+          "comment": "Annuler",
+          "command": "click",
+          "target": "css=button:nth-child(2)",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "d240dcbd-45a9-450c-8870-7dd97b9f4d59",
+          "comment": "Corrigé : assertValue (assertText lit le texte d'un champ, toujours vide)",
+          "command": "assertValue",
+          "target": "id=user",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "a50bf501-bc23-4d62-944b-775439019538",
+          "comment": "",
+          "command": "assertValue",
+          "target": "id=email",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "935a20fd-eb0a-4b52-a267-d67552966a9f",
+          "comment": "",
+          "command": "assertValue",
+          "target": "id=password",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "3aed894f-9d7a-45ff-b289-eff7f89b041f",
+          "comment": "",
+          "command": "assertValue",
+          "target": "id=psw-confirmation",
+          "targets": [],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "a4477c91-cc45-444d-ab6b-76ee29b67851",
+      "name": "Suite complète",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "d6ecaa76-34c9-4c78-a786-06fe7e45e60d",
+        "5c77454b-4153-4994-b8b2-270fcd24de7f",
+        "9b6a42b5-a169-4daa-a418-887ec1ba4541",
+        "59e2c384-f0aa-4e32-9ff3-9cbdcfef14ba"
+      ]
+    }
+  ],
+  "urls": [
+    "https://enijdenis.github.io"
+  ],
+  "plugins": []
+}
