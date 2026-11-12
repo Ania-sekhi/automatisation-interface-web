@@ -1,0 +1,36 @@
+name: Tests d'interface web
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  robot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Installer les dépendances
+        run: |
+          pip install -r requirements.txt
+          pip install applications/velocite/velocite-5.0-py3-none-any.whl
+          rfbrowser init chromium
+
+      - name: Lancer la campagne Robot Framework
+        run: robot --outputdir results --xunit xunit.xml --skiponfailure bug-connu tests
+
+      - name: Publier le rapport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rapport-robot
+          path: results/
